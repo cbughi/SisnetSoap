@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://localhost/payment_service"
+    xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+    xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:wsoap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+    xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ws="http://localhost/payment_service">
+    
+    <wsdl:types>
+        <xs:schema targetNamespace="http://localhost/payment_service">
+            
+            <xs:element name="PersonData">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="PersonName" type="xs:string"/>
+                        <xs:element name="PersonType" type="xs:string"/>
+                        <xs:element name="PersonEmail" type="xs:string"/>
+                        <xs:element name="PersonTel" type="xs:int"/>
+                        <xs:element name="PersonDoc" type="xs:int"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            
+            <xs:element name="PaymentData">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="CreditCardBrand" type="xs:string"/>
+                        <xs:element name="CreditCardNumber" type="xs:int"/>
+                        <xs:element name="CreditCardCode" type="xs:int"/>
+                        <xs:element name="CreditCardExpiration" type="xs:date"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            
+            <xs:element name="PurchaseData">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="PurchaseId" type="xs:int"/>
+                        <xs:element name="PurchaseValue" type="xs:float"/>
+                        <xs:element name="PurchaseQuantity" type="xs:int"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+			<xs:element name="Token">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="8"/>
+						<xs:maxLength value="8"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+
+			<xs:element name="TemporaryToken">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="8"/>
+						<xs:maxLength value="8"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+
+			<xs:element name="PaymentId">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="8"/>
+						<xs:maxLength value="8"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+
+            <xs:element name="DuplicatedUser">
+                <xs:complexType>
+                    <xs:all>
+                        <xs:element name="DuplicatedUserDetails" type="xs:string"/>
+                    </xs:all>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="InvalidPayment">
+                <xs:complexType>
+                    <xs:all>
+                        <xs:element name="InvalidPaymentDetails" type="xs:string"/>
+                    </xs:all>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="PaymentInexistent">
+                <xs:complexType>
+                    <xs:all>
+                        <xs:element name="PaymentInexistentDetails" type="xs:string"/>
+                    </xs:all>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="NotAuthorized">
+                <xs:complexType>
+                    <xs:all>
+                        <xs:element name="NotAuthorizedDetails" type="xs:string"/>
+                    </xs:all>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="InvalidTemporaryToken">
+                <xs:complexType>
+                    <xs:all>
+                        <xs:element name="InvalidTemporaryTokenDetails" type="xs:string"/>
+                    </xs:all>
+                </xs:complexType>
+            </xs:element>
+            
+        </xs:schema>
+    </wsdl:types>
+    
+    <wsdl:message name="SetToken">
+        <wsdl:part name="PersonData" element="ws:PersonData"/>
+    </wsdl:message>
+    
+    <wsdl:message name="GetToken">
+        <wsdl:part name="Token" element="ws:Token"/>
+    </wsdl:message>
+
+    <wsdl:message name="SetDefinitiveToken">
+        <wsdl:part name="TemporaryToken" element="ws:TemporaryToken"/>
+    </wsdl:message>
+    
+    <wsdl:message name="GetDefinitiveToken">
+        <wsdl:part name="Token" element="ws:TemporaryToken"/>
+    </wsdl:message>
+    
+    <wsdl:message name="MakePaymentInput">
+        <wsdl:part name="Token" element="ws:Token"/>
+        <wsdl:part name="PersonData" element="ws:PersonData"/>
+        <wsdl:part name="PaymentData" element="ws:PaymentData"/>
+        <wsdl:part name="PurchaseData" element="ws:PurchaseData"/>
+    </wsdl:message>
+    
+    <wsdl:message name="MakePaymentOutput">
+        <wsdl:part name="PaymentId" element="ws:PaymentId"/>
+    </wsdl:message>
+    
+    <wsdl:message name="ConsultPaymentInput">
+        <wsdl:part name="Token" element="ws:Token"/>
+        <wsdl:part name="PaymentId" element="ws:PaymentId"/>
+    </wsdl:message>
+    
+    <wsdl:message name="ConsultPaymentOutput">
+        <wsdl:part name="PaymentData" element="ws:PaymentData"/>
+    </wsdl:message>
+    
+    <wsdl:message name="CancelPaymentInput">
+        <wsdl:part name="PaymentId" element="ws:PaymentId"/>
+    </wsdl:message>
+    
+    <wsdl:message name="CancelPaymentOutput">
+        <wsdl:part name="PaymentData" element="ws:PaymentData"/>
+    </wsdl:message>
+
+    <wsdl:message name="DuplicatedUserException">
+        <wsdl:part name="DuplicatedUser" element="ws:DuplicatedUser"/>
+    </wsdl:message>
+
+    <wsdl:message name="InvalidPaymentException">
+        <wsdl:part name="InvalidPayment" element="ws:InvalidPayment"/>
+    </wsdl:message>
+
+    <wsdl:message name="PaymentInexistentException">
+        <wsdl:part name="PaymentInexistent" element="ws:PaymentInexistent"/>
+    </wsdl:message>
+
+    <wsdl:message name="NotAuthorizedException">
+        <wsdl:part name="NotAuthorized" element="ws:NotAuthorized"/>
+    </wsdl:message>
+
+    <wsdl:message name="InvalidTemporaryTokenException">
+        <wsdl:part name="InvalidTemporaryToken" element="ws:InvalidTemporaryToken"/>
+    </wsdl:message>
+    
+    <wsdl:portType name="RegisterUserSOAP">
+        <wsdl:operation name="RegisterUser">
+            <wsdl:input message="ws:SetToken" />
+            <wsdl:output message="ws:GetToken" />
+            <wsdl:fault name="DuplicatedUserException" message="ws:DuplicatedUserException" />
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <wsdl:portType name="RecoverTokenSOAP">
+        <wsdl:operation name="RecoverToken">
+            <wsdl:input message="ws:SetDefinitiveToken" />
+            <wsdl:output message="ws:GetDefinitiveToken" />
+            <wsdl:fault name="InvalidTemporaryTokenException" message="ws:InvalidTemporaryTokenException" />
+        </wsdl:operation>
+    </wsdl:portType>
+    
+    <wsdl:portType name="MakePaymentSOAP">
+        <wsdl:operation name="MakePayment">
+            <wsdl:input message="ws:MakePaymentInput" />
+            <wsdl:output message="ws:MakePaymentOutput" />
+            <wsdl:fault name="InvalidPaymentException" message="ws:InvalidPaymentException" />
+        </wsdl:operation>
+    </wsdl:portType>
+    
+    <wsdl:portType name="ConsultPaymentSOAP">
+        <wsdl:operation name="ConsultPayment">
+            <wsdl:input message="ws:ConsultPaymentInput" />
+            <wsdl:output message="ws:ConsultPaymentOutput" />
+            <wsdl:fault name="PaymentInexistentException" message="ws:PaymentInexistentException" />
+        </wsdl:operation>
+    </wsdl:portType>
+    
+    <wsdl:portType name="CancelPaymentSOAP">
+        <wsdl:operation name="CancelPayment">
+            <wsdl:input message="ws:CancelPaymentInput" />
+            <wsdl:output message="ws:CancelPaymentOutput" />
+            <wsdl:fault name="NotAuthorizedException" message="ws:NotAuthorizedException" />
+        </wsdl:operation>
+    </wsdl:portType>
+    
+    <wsdl:binding name="RegisterUserSOAP" type="ws:RegisterUserSOAP">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        
+        <wsdl:operation name="RegisterUser">
+            <soap:operation soapAction="http://localhost/payment_service/RegisterUser" style="document"/>
+            <wsdl:input>
+                <soap:body parts="PersonData" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="Token" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="DuplicatedUserException">
+        		<soap:fault name="DuplicatedUserException" use="literal"/>
+      		</wsdl:fault>
+        </wsdl:operation>
+        
+    </wsdl:binding>
+
+    <wsdl:binding name="RecoverTokenSOAP" type="ws:RecoverTokenSOAP">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        
+        <wsdl:operation name="RecoverToken">
+            <soap:operation soapAction="http://localhost/payment_service/RecoverToken" style="document"/>
+            <wsdl:input>
+                <soap:body parts="TemporaryToken" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="Token" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="InvalidTemporaryTokenException">
+        		<soap:fault name="InvalidTemporaryTokenException" use="literal"/>
+      		</wsdl:fault>
+        </wsdl:operation>
+        
+    </wsdl:binding>
+    
+    <wsdl:binding name="MakePaymentSOAP" type="ws:MakePaymentSOAP">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        
+        <wsdl:operation name="MakePayment">
+            <soap:operation soapAction="http://localhost/payment_service/MakePayment" style="document"/>
+            <wsdl:input>
+                <soap:body parts="Token" use="literal"/>
+                <soap:body parts="PersonData" use="literal"/>
+                <soap:body parts="PaymentData" use="literal"/>
+                <soap:body parts="PurchaseData" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="PaymentId" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="InvalidPaymentException">
+        		<soap:fault name="InvalidPaymentException" use="literal"/>
+      		</wsdl:fault>
+        </wsdl:operation>
+        
+    </wsdl:binding>
+    
+    <wsdl:binding name="ConsultPaymentSOAP" type="ws:ConsultPaymentSOAP">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        
+        <wsdl:operation name="ConsultPayment">
+            <soap:operation soapAction="http://localhost/payment_service/ConsultPayment" style="document"/>
+            <wsdl:input>
+                <soap:body parts="Token" use="literal"/>
+                <soap:body parts="PaymentId" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="PaymentData" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="PaymentInexistentException">
+        		<soap:fault name="PaymentInexistentException" use="literal"/>
+      		</wsdl:fault>
+        </wsdl:operation>
+        
+    </wsdl:binding>
+    
+    <wsdl:binding name="CancelPaymentSOAP" type="ws:CancelPaymentSOAP">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        
+        <wsdl:operation name="CancelPayment">
+            <soap:operation soapAction="http://localhost/payment_service/CancelPayment" style="document"/>
+            <wsdl:input>
+                <soap:body parts="PaymentId" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="PaymentData" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="NotAuthorizedException">
+        		<soap:fault name="NotAuthorizedException" use="literal"/>
+      		</wsdl:fault>
+        </wsdl:operation>
+        
+    </wsdl:binding>
+    
+    <wsdl:service name="PaymentService">
+        <wsdl:documentation>Make payments.</wsdl:documentation>
+        <wsdl:port name="RegisterUserSOAP" binding="ws:RegisterUserSOAP">
+            <soap:address location="http://localhost/payment_service/RegisterUser"/>
+        </wsdl:port>
+        <wsdl:port name="RecoverTokenSOAP" binding="ws:RecoverTokenSOAP">
+            <soap:address location="http://localhost/payment_service/RecoverToken"/>
+        </wsdl:port>
+        <wsdl:port name="MakePaymentSOAP" binding="ws:MakePaymentSOAP">
+            <soap:address location="http://localhost/payment_service/MakePayment"/>
+        </wsdl:port>
+        <wsdl:port name="ConsultPaymentSOAP" binding="ws:ConsultPaymentSOAP">
+            <soap:address location="http://localhost/payment_service/ConsultPayment"/>
+        </wsdl:port>
+        <wsdl:port name="CancelPaymentSOAP" binding="ws:CancelPaymentSOAP">
+            <soap:address location="http://localhost/payment_service/CancelPayment"/>
+        </wsdl:port>
+    </wsdl:service>
+    
+</wsdl:definitions>
