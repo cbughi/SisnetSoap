@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions targetNamespace="http://localhost/payment_service"
+<wsdl:definitions  name="payment_service" targetNamespace="http://localhost:3333/payment_service"
     xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
     xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
@@ -8,10 +8,10 @@
     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ws="http://localhost/payment_service">
-    
+
     <wsdl:types>
         <xs:schema targetNamespace="http://localhost/payment_service">
-            
+
             <xs:element name="PersonData">
                 <xs:complexType>
                     <xs:sequence>
@@ -23,7 +23,7 @@
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
-            
+
             <xs:element name="PaymentData">
                 <xs:complexType>
                     <xs:sequence>
@@ -34,7 +34,7 @@
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
-            
+
             <xs:element name="PurchaseData">
                 <xs:complexType>
                     <xs:sequence>
@@ -111,14 +111,14 @@
                     </xs:all>
                 </xs:complexType>
             </xs:element>
-            
+
         </xs:schema>
     </wsdl:types>
-    
+
     <wsdl:message name="SetToken">
         <wsdl:part name="PersonData" element="ws:PersonData"/>
     </wsdl:message>
-    
+
     <wsdl:message name="GetToken">
         <wsdl:part name="Token" element="ws:Token"/>
     </wsdl:message>
@@ -126,35 +126,35 @@
     <wsdl:message name="SetDefinitiveToken">
         <wsdl:part name="TemporaryToken" element="ws:TemporaryToken"/>
     </wsdl:message>
-    
+
     <wsdl:message name="GetDefinitiveToken">
         <wsdl:part name="Token" element="ws:TemporaryToken"/>
     </wsdl:message>
-    
+
     <wsdl:message name="MakePaymentInput">
         <wsdl:part name="Token" element="ws:Token"/>
         <wsdl:part name="PersonData" element="ws:PersonData"/>
         <wsdl:part name="PaymentData" element="ws:PaymentData"/>
         <wsdl:part name="PurchaseData" element="ws:PurchaseData"/>
     </wsdl:message>
-    
+
     <wsdl:message name="MakePaymentOutput">
         <wsdl:part name="PaymentId" element="ws:PaymentId"/>
     </wsdl:message>
-    
+
     <wsdl:message name="ConsultPaymentInput">
         <wsdl:part name="Token" element="ws:Token"/>
         <wsdl:part name="PaymentId" element="ws:PaymentId"/>
     </wsdl:message>
-    
+
     <wsdl:message name="ConsultPaymentOutput">
         <wsdl:part name="PaymentData" element="ws:PaymentData"/>
     </wsdl:message>
-    
+
     <wsdl:message name="CancelPaymentInput">
         <wsdl:part name="PaymentId" element="ws:PaymentId"/>
     </wsdl:message>
-    
+
     <wsdl:message name="CancelPaymentOutput">
         <wsdl:part name="PaymentData" element="ws:PaymentData"/>
     </wsdl:message>
@@ -178,7 +178,7 @@
     <wsdl:message name="InvalidTemporaryTokenException">
         <wsdl:part name="InvalidTemporaryToken" element="ws:InvalidTemporaryToken"/>
     </wsdl:message>
-    
+
     <wsdl:portType name="RegisterUserSOAP">
         <wsdl:operation name="RegisterUser">
             <wsdl:input message="ws:SetToken" />
@@ -194,7 +194,7 @@
             <wsdl:fault name="InvalidTemporaryTokenException" message="ws:InvalidTemporaryTokenException" />
         </wsdl:operation>
     </wsdl:portType>
-    
+
     <wsdl:portType name="MakePaymentSOAP">
         <wsdl:operation name="MakePayment">
             <wsdl:input message="ws:MakePaymentInput" />
@@ -202,7 +202,7 @@
             <wsdl:fault name="InvalidPaymentException" message="ws:InvalidPaymentException" />
         </wsdl:operation>
     </wsdl:portType>
-    
+
     <wsdl:portType name="ConsultPaymentSOAP">
         <wsdl:operation name="ConsultPayment">
             <wsdl:input message="ws:ConsultPaymentInput" />
@@ -210,7 +210,7 @@
             <wsdl:fault name="PaymentInexistentException" message="ws:PaymentInexistentException" />
         </wsdl:operation>
     </wsdl:portType>
-    
+
     <wsdl:portType name="CancelPaymentSOAP">
         <wsdl:operation name="CancelPayment">
             <wsdl:input message="ws:CancelPaymentInput" />
@@ -218,10 +218,10 @@
             <wsdl:fault name="NotAuthorizedException" message="ws:NotAuthorizedException" />
         </wsdl:operation>
     </wsdl:portType>
-    
+
     <wsdl:binding name="RegisterUserSOAP" type="ws:RegisterUserSOAP">
         <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-        
+
         <wsdl:operation name="RegisterUser">
             <soap:operation soapAction="http://localhost/payment_service/RegisterUser" style="document"/>
             <wsdl:input>
@@ -234,12 +234,12 @@
         		<soap:fault name="DuplicatedUserException" use="literal"/>
       		</wsdl:fault>
         </wsdl:operation>
-        
+
     </wsdl:binding>
 
     <wsdl:binding name="RecoverTokenSOAP" type="ws:RecoverTokenSOAP">
         <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-        
+
         <wsdl:operation name="RecoverToken">
             <soap:operation soapAction="http://localhost/payment_service/RecoverToken" style="document"/>
             <wsdl:input>
@@ -252,12 +252,12 @@
         		<soap:fault name="InvalidTemporaryTokenException" use="literal"/>
       		</wsdl:fault>
         </wsdl:operation>
-        
+
     </wsdl:binding>
-    
+
     <wsdl:binding name="MakePaymentSOAP" type="ws:MakePaymentSOAP">
         <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-        
+
         <wsdl:operation name="MakePayment">
             <soap:operation soapAction="http://localhost/payment_service/MakePayment" style="document"/>
             <wsdl:input>
@@ -273,12 +273,12 @@
         		<soap:fault name="InvalidPaymentException" use="literal"/>
       		</wsdl:fault>
         </wsdl:operation>
-        
+
     </wsdl:binding>
-    
+
     <wsdl:binding name="ConsultPaymentSOAP" type="ws:ConsultPaymentSOAP">
         <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-        
+
         <wsdl:operation name="ConsultPayment">
             <soap:operation soapAction="http://localhost/payment_service/ConsultPayment" style="document"/>
             <wsdl:input>
@@ -292,12 +292,12 @@
         		<soap:fault name="PaymentInexistentException" use="literal"/>
       		</wsdl:fault>
         </wsdl:operation>
-        
+
     </wsdl:binding>
-    
+
     <wsdl:binding name="CancelPaymentSOAP" type="ws:CancelPaymentSOAP">
         <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-        
+
         <wsdl:operation name="CancelPayment">
             <soap:operation soapAction="http://localhost/payment_service/CancelPayment" style="document"/>
             <wsdl:input>
@@ -310,9 +310,9 @@
         		<soap:fault name="NotAuthorizedException" use="literal"/>
       		</wsdl:fault>
         </wsdl:operation>
-        
+
     </wsdl:binding>
-    
+
     <wsdl:service name="PaymentService">
         <wsdl:documentation>Make payments.</wsdl:documentation>
         <wsdl:port name="RegisterUserSOAP" binding="ws:RegisterUserSOAP">
@@ -331,5 +331,5 @@
             <soap:address location="http://localhost/payment_service/CancelPayment"/>
         </wsdl:port>
     </wsdl:service>
-    
+
 </wsdl:definitions>
