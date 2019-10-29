@@ -5,12 +5,12 @@ class Cartao extends Model {
     super.init(
       {
         cliente_id: Sequelize.INTEGER,
-        numero: Sequilize.INTEGER,
-        cvv: Sequilize.INTEGER,
-        dtvalidade: Sequilize.DATE,
+        numero: Sequelize.INTEGER,
+        cvv: Sequelize.INTEGER,
+        dtvalidade: Sequelize.DATE,
         cpf: Sequelize.CHAR(11),
-        bandeira: Sequilize.STRING,
-        proprietario: Sequilize.STRING,
+        bandeira: Sequelize.STRING,
+        proprietario: Sequelize.STRING,
       },
       {
         sequelize,

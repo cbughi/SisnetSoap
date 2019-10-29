@@ -20,4 +20,4 @@ class Produto_pedido extends Model {
   }
 }
 
-export default Pedido_produto;
+export default Produto_pedido;

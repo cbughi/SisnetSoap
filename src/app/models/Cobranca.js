@@ -5,10 +5,10 @@ class Cobranca extends Model {
     super.init(
       {
         pedido_id: Sequelize.INTEGER,
-        valor: Sequilize.INTEGER,
-        cartao_id: Sequilize.INTEGER,
-        data: Sequilize.DATE,
-        status: Sequilize.INTEGER,        
+        valor: Sequelize.INTEGER,
+        cartao_id: Sequelize.INTEGER,
+        data: Sequelize.DATE,
+        status: Sequelize.INTEGER,        
       },
       {
         sequelize,
