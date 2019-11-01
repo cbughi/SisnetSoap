@@ -2,7 +2,7 @@ import Dono from './app/models/Dono';
 
 const services = {
   PaymentService: {
-    RegisterUserSOAP: {
+    PaymentServicePort: {
       async RegisterUser(params) {
         const { PersonName, PersonEmail, PersonDoc } = params;
 
