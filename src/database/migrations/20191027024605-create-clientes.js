@@ -1,18 +1,18 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('dono', {
+    return queryInterface.createTable('clientes', {
       id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
         autoIncrement: true,
+        allowNull: false,
         primaryKey: true,
       },
       nome: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      cnpj: {
-        type: Sequelize.CHAR(14),
+      cpf: {
+        type: Sequelize.CHAR(11),
         allowNull: false,
         unique: true,
       },
@@ -21,8 +21,11 @@ module.exports = {
         allowNull: false,
         unique: true,
       },
-      token: {
-        type: Sequelize.STRING,
+      dono_id: {
+        type: Sequelize.INTEGER,
+        references: { model: 'donos', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'NO ACTION',
         allowNull: false,
       },
       created_at: {
@@ -37,6 +40,6 @@ module.exports = {
   },
 
   down: queryInterface => {
-    return queryInterface.dropTable('dono');
+    return queryInterface.dropTable('clientes');
   },
 };

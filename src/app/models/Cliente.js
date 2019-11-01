@@ -5,7 +5,7 @@ class Cliente extends Model {
     super.init(
       {
         nome: Sequelize.STRING,
-        cpf: Sequelize.STRING,
+        cpf: Sequelize.CHAR(11),
         email: Sequelize.STRING,
         dono_id: Sequelize.INTEGER,
       },
