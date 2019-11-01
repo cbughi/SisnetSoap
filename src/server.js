@@ -10,5 +10,5 @@ const xml = fs.readFileSync(resolve(__dirname, 'paymentService.wsdl'), 'utf-8');
 require('dotenv').config();
 
 app.listen(process.env.APP_PORT, () => {
-  soap.listen(app, '/wsdl', services, xml);
+  soap.listen(app, '/paymentService', services, xml);
 });

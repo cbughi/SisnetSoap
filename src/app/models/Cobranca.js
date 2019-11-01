@@ -8,7 +8,7 @@ class Cobranca extends Model {
         valor: Sequelize.INTEGER,
         cartao_id: Sequelize.INTEGER,
         data: Sequelize.DATE,
-        status: Sequelize.INTEGER,        
+        status: Sequelize.INTEGER,
       },
       {
         sequelize,

@@ -8,7 +8,7 @@ class Dono extends Model {
       {
         nome: Sequelize.STRING,
         email: Sequelize.STRING,
-        cnpj: Sequelize.CHAR(14),
+        cnpj: Sequelize.STRING,
         token: Sequelize.CHAR(8),
       },
       {

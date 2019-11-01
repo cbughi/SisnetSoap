@@ -1,4 +1,4 @@
-'use strict';
+
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
@@ -11,18 +11,18 @@ module.exports = {
       },
       produto_id: {
         type: Sequelize.INTEGER,
-        references: { model: 'produto', key: 'id' },
+        references: { model: 'produtos', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'NO ACTION',
         allowNull: false,
       },
       pedido_id: {
         type: Sequelize.INTEGER,
-        references: { model: 'pedido', key: 'id' },
+        references: { model: 'pedidos', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'NO ACTION',
         allowNull: false,
-      },      
+      },
       created_at: {
         type: Sequelize.DATE,
         allowNull: false,
@@ -36,5 +36,5 @@ module.exports = {
 
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('produto_pedido');
-  }
+  },
 };

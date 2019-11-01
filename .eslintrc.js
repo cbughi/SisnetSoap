@@ -20,6 +20,7 @@ module.exports = {
     'prettier/prettier': 'error',
     'class-methods-use-this': 'off',
     'camelcase': 'off',
-    'no-unused-vars': ['error', {'argsIgnorePattern': 'nex'}]
+    'no-unused-vars': ['error', {'argsIgnorePattern': 'nex'}],
+    'no-throw-literal': 'off',
   },
 };

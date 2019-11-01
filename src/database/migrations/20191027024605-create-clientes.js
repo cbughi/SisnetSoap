@@ -1,27 +1,31 @@
-'use strict';
-
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('pedido', {
+    return queryInterface.createTable('clientes', {
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         allowNull: false,
         primaryKey: true,
       },
-      cliente_id: {
+      nome: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      cpf: {
+        type: Sequelize.CHAR(11),
+        allowNull: false,
+        unique: true,
+      },
+      email: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true,
+      },
+      dono_id: {
         type: Sequelize.INTEGER,
-        references: { model: 'cliente', key: 'id' },
+        references: { model: 'donos', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'NO ACTION',
-        allowNull: false,
-      },
-      data: {
-        type: Sequelize.DATE,
-        allowNull: false,
-      },
-      status: {
-        type: Sequelize.INTEGER,
         allowNull: false,
       },
       created_at: {
@@ -35,7 +39,7 @@ module.exports = {
     });
   },
 
-  down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('pedido');
-  }
+  down: queryInterface => {
+    return queryInterface.dropTable('clientes');
+  },
 };

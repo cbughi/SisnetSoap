@@ -1,32 +1,30 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('cliente', {
+    return queryInterface.createTable('enderecos', {
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         allowNull: false,
         primaryKey: true,
       },
-      nome: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      cpf: {
-        type: Sequelize.CHAR(11),
-        allowNull: false,
-        unique: true,
-      },
-      email: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
-      },
-      dono_id: {
+      cliente_id: {
         type: Sequelize.INTEGER,
-        references: { model: 'dono', key: 'id' },
+        references: { model: 'clientes', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'NO ACTION',
         allowNull: false,
+      },
+      rua: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      numero: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      complemento: {
+        type: Sequelize.STRING,
+        allowNull: true,
       },
       created_at: {
         type: Sequelize.DATE,
@@ -40,6 +38,6 @@ module.exports = {
   },
 
   down: queryInterface => {
-    return queryInterface.dropTable('cliente');
+    return queryInterface.dropTable('enderecos');
   },
 };

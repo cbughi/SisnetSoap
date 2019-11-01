@@ -1,4 +1,4 @@
-'use strict';
+
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
@@ -11,11 +11,11 @@ module.exports = {
       },
       cliente_id: {
         type: Sequelize.INTEGER,
-        references: { model: 'cliente', key: 'id' },
+        references: { model: 'clientes', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'NO ACTION',
         allowNull: false,
-      }, 
+      },
       numero: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -53,5 +53,5 @@ module.exports = {
 
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('cartao');
-  }
+  },
 };
